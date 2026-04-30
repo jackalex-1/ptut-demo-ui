@@ -53,8 +53,13 @@ export function ChatContainer() {
           throw new Error("Chat API Key is missing. Check .env.local");
         }
 
+        const workflowUrl = process.env.NEXT_PUBLIC_WORKFLOW_URL;
+        if (!workflowUrl) {
+          throw new Error("Workflow URL is missing. Check .env.local");
+        }
+
         const res = await fetch(
-          "https://www.sim.ai/api/workflows/59a7b3f6-cc51-4089-b2b7-531db20a9bcd/execute",
+          workflowUrl,
           {
             method: "POST",
             headers: {
