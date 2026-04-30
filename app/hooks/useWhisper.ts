@@ -108,7 +108,9 @@ export function useWhisper(options?: UseWhisperOptions) {
       };
 
       // Set up Audio Context for Silence Detection
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      type AudioContextConstructor = typeof globalThis.AudioContext;
+      const win = window as Window & { webkitAudioContext?: AudioContextConstructor };
+      const AudioContextClass: AudioContextConstructor = win.webkitAudioContext ?? globalThis.AudioContext;
       const audioContext = new AudioContextClass();
       const source = audioContext.createMediaStreamSource(stream);
       const analyser = audioContext.createAnalyser();

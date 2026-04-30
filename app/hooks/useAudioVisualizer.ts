@@ -12,18 +12,21 @@ export function useAudioVisualizer(stream: MediaStream | null, isMuted: boolean)
 
   useEffect(() => {
     if (!stream || isMuted) {
-      setVolume(0);
       if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
       return;
     }
 
     // Initialize AudioContext if not already created
     if (!audioContextRef.current) {
-      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-      audioContextRef.current = new AudioContext();
+      type AudioContextConstructor = typeof globalThis.AudioContext;
+      const win = window as Window & { webkitAudioContext?: AudioContextConstructor };
+      const AudioContextCtor: AudioContextConstructor = win.webkitAudioContext ?? globalThis.AudioContext;
+      audioContextRef.current = new AudioContextCtor();
     }
 
     const audioCtx = audioContextRef.current;
+    if (!audioCtx) return;
 
     // Connect stream to analyser
     analyserRef.current = audioCtx.createAnalyser();
