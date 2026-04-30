@@ -104,23 +104,33 @@ body {
   padding: 1rem;
   position: relative;
   overflow: hidden;
+  background: #080f1a;
+  /* ROTATING GRADIENT — uncomment to revert:
   background: linear-gradient(-45deg, #003366, #001a33, #1a0a0a, #C41E3A, #8B0000, #003366);
   background-size: 400% 400%;
   animation: rotate-gradient 12s ease infinite;
+  */
 }
 
 
-.bg-video,
-.bg-image {
+.bg-video {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 0;
   object-fit: cover;
   pointer-events: none;
   filter: blur(6px) brightness(0.8);
+}
+
+.bg-image {
+  object-fit: cover;
+  object-position: center;
+  z-index: 0 !important;
+  filter: blur(4px) brightness(0.5) !important;
+  pointer-events: none;
 }
 
 .bg-video-overlay {
