@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cbd-web-widget
+    ports:
+      - "3000:3000"
+    restart: always
+    environment:
+      - NODE_ENV=production
+      # Pass any environment variables you need in production here
+      # Or uncomment the env_file section to pass variables from .env
+      # - NEXT_PUBLIC_API_URL=https://api.example.com
+    # env_file:
+    #   - .env.local
